@@ -27,6 +27,12 @@ Pigeon consists of three key modules: 1) mask generation module creates token-le
 ### Dataset
 Download the datasets into the "./dataset" folder from [here](https://drive.google.com/drive/folders/1MpvkQ_DCimfcXBZJpPmliNf8s4reUA9B?usp=drive_link), including SER-30K and MovieLens-Latest-small for sticker and movie poster scenarios, respectively.
 
+### Pre-trained Models
+Please download the following pre-trained models for fine-tuning and evaluation.
+- [LaVIT](https://huggingface.co/rain1011/LaVIT-7B-v2)
+- [SDXL](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0)
+- [DINO-v2](https://huggingface.co/facebook/dinov2-large) (for evaluation)
+
 ### Training
 #### Stage-1: Masked Preference Reconstruction
 Please configure the correct paths of all data in `finetune_sft.py` and `run_sft.sh`.
