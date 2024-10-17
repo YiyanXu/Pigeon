@@ -25,7 +25,7 @@ Pigeon consists of three key modules: 1) mask generation module creates token-le
 
 ## Usage
 ### Dataset
-Download the datasets into the "./dataset" folder from [here](), including SER-30K and MovieLens-Latest-small for sticker and movie poster scenarios, respectively.
+Download the datasets into the "./dataset" folder from [here](https://drive.google.com/drive/folders/1MpvkQ_DCimfcXBZJpPmliNf8s4reUA9B?usp=drive_link), including SER-30K and MovieLens-Latest-small for sticker and movie poster scenarios, respectively.
 
 ### Training
 #### Stage-1: Masked Preference Reconstruction
@@ -43,7 +43,7 @@ sh run_dpo.sh
 ```
 
 ### Inference
-1. Download the checkpoint released by us from [here]().
+1. Download the checkpoint released by us from [here](https://drive.google.com/drive/folders/1Hax0ZubvHqaGvUROVzD32_iKPpi8mYh1?usp=drive_link).
 2. Put the checkpoint into the appropriate folder.
 3. Configure correct paths of all data in `inference.py`.
 4. Run inference.py
