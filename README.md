@@ -25,7 +25,7 @@ Pigeon consists of three key modules: 1) mask generation module creates token-le
 
 ## Usage
 ### Dataset
-The experimental data are in './dataset' folder, including SER-30K and MovieLens-Latest-small for sticker and movie poster scenarios, respectively.
+Download the datasets into the "./dataset" folder from [here](), including SER-30K and MovieLens-Latest-small for sticker and movie poster scenarios, respectively.
 
 ### Training
 #### Stage-1: Masked Preference Reconstruction
