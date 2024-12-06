@@ -27,6 +27,162 @@ Pigeon consists of three key modules: 1) mask generation module creates token-le
 ### Dataset
 Download the datasets into the "./dataset" folder from [here](https://drive.google.com/drive/folders/1MpvkQ_DCimfcXBZJpPmliNf8s4reUA9B?usp=drive_link), including SER-30K and MovieLens-Latest-small for sticker and movie poster scenarios, respectively.
 
+#### Sticker
+* **data_path:** `./dataset/SER-30K/processed_seq`
+
+* **`mapped_anno_dict.npy`:** dict of sticker info.
+    ```python
+    {
+        
+        iid1: {  # image id
+            'emo': 'Neutral',  # sticker emotion, like sadness
+            'text': ''  # sticker text, most are empty
+        },
+        iid2: ...,
+        ...
+    }
+    ```
+
+* **`mapped_user_dict.npy`:** dict of user-interacted seqs, where each user interacts with a single theme.
+    ```python
+    {
+        uid1: {  # user id
+            gid1: [iid1, iid2, ...], # user historically interacted iids
+        },
+        uid2: {
+            gid2: ...,
+        },
+        ...
+    }
+    ```
+
+* **`train.npy`, `valid.npy` & `test.npy`:** We apply a sliding window of six interactions, moving one step at a time to create data samples for each user in both scenarios. Each sample treats the first five interactions as the user history images and the last as the target image. We split the samples into training, validation, and testing sets with a ratio of 8:1:1.
+    ```python
+    {
+        uid1: {  # user id
+            gid1: [  # genre id
+                [iid1, iid2, iid3, iid4, iid5, iid6],  # interaction sequence, where the last one serves as the target image and the preceding ones are history images
+                [...],
+                ...
+            ],
+        },
+        uid2: {...},
+        ...
+    }
+    ```
+
+* **`all_image_paths.npy`:** list of image paths arranged according to iids.
+    * **image_folder_path:** `./dataset/SER30K/Images`
+    ```python
+    import numpy as np
+    from PIL import Image
+    import os
+
+    img_folder_path = "./dataset/SER-30K/Images"
+    all_image_paths = np.load("./dataset/SER30K/processed_seq/all_image_paths.npy", allow_pickle=True)
+
+    iid = 100
+    img_path = os.path.join(img_folder_path, all_image_paths[iid])
+    im = Image.open(img_path)
+    display(im)
+    ```
+
+* **`sticker_semantics.npy`:** list of textual descriptions of each image with the same format as `all_image_paths.npy`.
+
+* **`all_clip_feats.npy` & `all_dino_feats.npy`:** list of extracted CLIP and DINO features for evaluation with the same format as `all_image_paths.npy`.
+
+* **`/map`:** maps of image id and user id saved during data preprocessing.
+
+* **`/data_ready`:** data processed for Pigeon training and evaluation.
+    * **`train_ready.npy`, `valid_ready.npy` & `test_ready.npy`** 
+        ```python
+        {   
+            'uids': [uid1, uid2, ...],
+            'genres': [gid1, gid2, ...],
+            'image': [
+                [iid1, iid2, iid3, iid4, iid5, iid6],  # the interaction seq of uid1
+                ...
+            ]
+            'text_input_ids': [...],
+            'text_attn_mask': [...],
+        }
+        ```
+
+    * **`train_hist_embeds.npy`，`valid_hist_embeds.npy` & `test_hist_embeds.npy`:** for evaluation.
+        ```python
+        {
+            uid1: {
+                target_iid1: {
+                    gid1: ..., # clip features of the target_iid image
+                },
+                target_iid2: {...},
+                ...
+            },
+            uid2: ...,
+            ...
+        }
+        ```
+
+* **`/dpo`:** preference dataset for the second-stage preference alignment.
+    * **`train_preference_data.npy` & `valid_preference_data.npy`**
+        ```python
+        {
+            uid1: {
+                target_iid1: {
+                    gid1: {
+                        'chosen': ...,  # chosen token sequence for <uid, target_iid1>
+                        'rejected': ...  # rejected token sequence for <uid, target_iid1>
+                    }
+                },
+                target_iid2: {...},
+                ...
+            },
+            uid2: ...,
+            ...
+        }
+        ```
+
+    * **`train.npy` & `valid.npy`**: randomly sampled subset of the above `train.npy` & `valid.npy` for the second-stage training.
+
+* **`/data_ready_dpo`:** data processed for the second-stage DPO.
+    * **`train_ready.npy` & `valid_ready.npy`**
+        ```python
+        {   
+            'uids': [uid1, uid2, ...],
+            'genres': [gid1, gid2, ...],
+            'image': [
+                [iid1, iid2, iid3, iid4, iid5, iid6],  # the interaction seq of uid1
+                ...
+            ]
+            'text_input_ids': [...],
+            'text_attn_mask': [...],
+            'chosen_tokens': [...],
+            'rejected_tokens': [...]
+        }
+        ```
+
+#### Movie Poster
+* **data_path**: `./dataset/ml-latest-small/processed_seq`
+
+* **image_folder_path:** `./dataset/ml-latest-small/poster`
+
+* **`mapped_movies.npy`:** dict of movie info.
+    ```python
+    {
+        iid1: {  # image id / movie id
+            'title': 'Star Wars: Episode VI - Return of the Jedi (1983)',  # movie title
+            'genres': 'Action|Adventure|Fantasy',  # movie genres
+            'intro': ...  # movie introduction
+        },
+        iid2: ...,
+        ...
+    }
+    ```
+
+* **`user_seq_dict.npy`:** dict of user interaction history with the same format as `mapped_user_dict.npy` in the sticker dataset.
+
+* **Other data are the same as the sticker dataset.**
+
 ### Pre-trained Models
 Please download the following pre-trained models for fine-tuning and evaluation.
 - [LaVIT](https://huggingface.co/rain1011/LaVIT-7B-v2)
