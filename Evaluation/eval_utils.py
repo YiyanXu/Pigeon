@@ -592,23 +592,6 @@ def process_hist_embs(all_res, clip_feats):
             for genre_id in all_res[uid][tgt_iid]:
                 hist_iids = all_res[uid][tgt_iid][genre_id]["history"]
                 hist_img_embs = clip_feats[hist_iids]
-                hist_embs[uid][tgt_iid][genre_id] = hist_img_embs.mean(dim=0)
-    
-    return hist_embs
-
-def process_ori_hist_embs(all_res, clip_feats):
-    hist_embs = {}
-    for uid in all_res:
-        if uid not in hist_embs:
-            hist_embs[uid] = {}
-
-        for tgt_iid in all_res[uid]:
-            if tgt_iid not in hist_embs[uid]:
-                hist_embs[uid][tgt_iid] = {}
-
-            for genre_id in all_res[uid][tgt_iid]:
-                hist_iids = all_res[uid][tgt_iid][genre_id]["history"]
-                hist_img_embs = clip_feats[hist_iids]
                 hist_embs[uid][tgt_iid][genre_id] = hist_img_embs.clone()
     
     return hist_embs
