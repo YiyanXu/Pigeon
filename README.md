@@ -1,7 +1,8 @@
 # Personalized Image Generation with Large Multimodal Models
 
-This is the pytorch implementation of our paper:
-> Personalized Image Generation with Large Multimodal Models
+This is the pytorch implementation of our paper at WWW 2025:
+> [Personalized Image Generation with Large Multimodal Models](https://arxiv.org/abs/2410.14170)
+> Yiyan Xu, Wenjie Wang, Yang Zhang, Biao Tang, Yan Peng, Fuli Feng, Xiangnan He
 
 ## Pigeon Overview
 Pigeon consists of three key modules: 1) mask generation module creates token-level masks for history and reference images, 2) personalized module encodes multimodal instructions and integrates them with masked history to generate personalized tokens, and 3) image generation module utilizes these tokens to produce personalized images.
