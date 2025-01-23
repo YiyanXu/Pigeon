@@ -2,6 +2,7 @@
 
 This is the pytorch implementation of our paper at WWW 2025:
 > [Personalized Image Generation with Large Multimodal Models](https://arxiv.org/abs/2410.14170)
+> 
 > Yiyan Xu, Wenjie Wang, Yang Zhang, Biao Tang, Yan Peng, Fuli Feng, Xiangnan He
 
 ## Pigeon Overview
