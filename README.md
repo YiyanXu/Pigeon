@@ -220,7 +220,7 @@ sh run_inf.sh
 cd ./Evaluation
 sh run_cal_scores.sh
 ```
-6. Run the `select_scores.ipynb` file to select the optimal reference mask ratio $\alpha_r$ (generated target image).
+6. Run the `./Evaluation/select_scores.ipynb` file to select the optimal reference mask ratio $\alpha_r$ (generated target image).
 
 ### Evaluation
 Run the evaluation code through the `.sh` files.
