@@ -6,7 +6,7 @@ do
     do
         for ckpt in 375
         do
-            for mask_ratio in 2.0
+            for mask_ratio in 2.0  # mask_ratio=2.0 denotes the selected images
             do
                 for scale_llama in 1.0
                 do
