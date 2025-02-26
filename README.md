@@ -12,6 +12,7 @@ Pigeon consists of three key modules: 1) mask generation module creates token-le
 ## Environment
 - Anaconda 3
 - python 3.8.13
+- cuda 12.2
 - peft 0.7.1
 - torch 2.3.0
 - torchvision 0.18.0
