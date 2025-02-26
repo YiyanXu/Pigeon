@@ -215,6 +215,12 @@ sh run_dpo.sh
 cd ./Pigeon
 sh run_inf.sh
 ```
+5. Calculate the history CIS and reference CS for each generated target image.
+```
+cd ./Evaluation
+sh run_cal_scores.sh
+```
+6. Run the `select_scores.ipynb` file to select the optimal reference mask ratio $\alpha_r$ (generated target image).
 
 ### Evaluation
 Run the evaluation code through the `.sh` files.
