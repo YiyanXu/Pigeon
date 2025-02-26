@@ -229,3 +229,6 @@ Run the evaluation code through the `.sh` files.
 cd ./Evaluation
 sh run_eval_pigeon.sh
 ```
+
+### Acknowledgments
+Our work heavily relies on the excellent contributions of [LaVIT](https://github.com/jy0205/LaVIT). We sincerely thank the team for their efforts.
