@@ -294,13 +294,13 @@ class LaVITforPigeonDPO(nn.Module):
         if not inference:
             chosen_tokens = batch["chosen_tokens"]
             rejected_tokens = batch["rejected_tokens"]
-            chosen_image_tokens =  [all_image_tokens[i][:-1] + [chosen_token.to(self.device)] for i,chosen_token in enumerate(chosen_tokens)]
+            chosen_image_tokens =  [all_image_tokens[i][:-1] + [chosen_token[1:].to(self.device)] for i,chosen_token in enumerate(chosen_tokens)]
             merged_chosen_input_tokens, merged_chosen_attention_masks, merged_chosen_labels = self.merge_batch_inputs(
                 chosen_image_tokens, text_input_ids, text_attn_mask,
                 inference, padding=self.llama_tokenizer.padding_side,
             )
             if self.mode == "dpo" or self.mode == "ipo":
-                rejected_image_tokens = [all_image_tokens[i][:-1] + [rejected_token.to(self.device)] for i,rejected_token in enumerate(rejected_tokens)]
+                rejected_image_tokens = [all_image_tokens[i][:-1] + [rejected_token[1:].to(self.device)] for i,rejected_token in enumerate(rejected_tokens)]
                 merged_rejected_input_tokens, merged_rejected_attention_masks, merged_rejected_labels = self.merge_batch_inputs(
                     rejected_image_tokens, text_input_ids, text_attn_mask,
                     inference, padding=self.llama_tokenizer.padding_side,
