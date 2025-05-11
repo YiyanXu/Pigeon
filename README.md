@@ -230,5 +230,13 @@ cd ./Evaluation
 sh run_eval_pigeon.sh
 ```
 
+### Preference Dataset Construction
+After completing the first stage of fine-tuning, you can follow these steps to construct your own preference dataset for DPO:
+1. Using the first-stage checkpoint, run `./Pigeon/run_inf.sh` to generate multiple personalized target images for both the training and validation sets:
+- For the training set: --mode train --eval_num 1000
+- For the validation set: --mode valid --eval_num 200
+3. Calculate the history CIS and reference CS for each generated target image by executing `./Evaluation/run_cal_scores.sh`.
+4. Run the `./Evaluation/select_scores_dpo.ipynb` file to construct the preference pairs for DPO training.
+
 ### Acknowledgments
 Our work heavily relies on the excellent contributions of [LaVIT](https://github.com/jy0205/LaVIT). We sincerely thank the team for their efforts.
